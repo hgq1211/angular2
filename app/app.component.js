@@ -12,38 +12,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Created by Administrator on 2016/8/3.
  */
 var core_1 = require('@angular/core');
+var core_2 = require('@angular/core');
+core_2.enableProdMode();
+var hero_detail_component_1 = require('./hero-detail.component');
+var hero_service_1 = require('./hero.service');
 var AppComponent = (function () {
-    function AppComponent() {
-        this.title = 'Tour AppComponent';
-        this.heroes = HEROES;
+    function AppComponent(heroService) {
+        this.heroService = heroService;
+        this.title = 'Tour of Heroes';
     }
+    AppComponent.prototype.getHeroes = function () {
+        var _this = this;
+        this.heroService.getHeroes().then(function (heroes) { return _this.heroes = heroes; });
+    };
+    AppComponent.prototype.ngOnInit = function () {
+        this.getHeroes();
+    };
     AppComponent.prototype.onSelect = function (hero) { this.selectedHero = hero; };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "<h1>{{title}}</h1>\n    <h2>My Heroes</h2>\n    <ul class=\"heroes\">\n    <li *ngFor=\"let hero of heroes\"[class.selected]=\"hero === selectedHero\" (click)=\"onSelect(hero)\">\n    <span class=\"badge\">{{hero.id}}</span> {{hero.name}}\n    </li>\n    </ul>\n<div *ngIf=\"selectedHero\">\n    <h2>{{selectedHero.name}} details!</h2>\n<div>\n    <label>id: </label>{{selectedHero.id}}\n</div>\n<div>\n    <label>name: </label>\n    <input [(ngModel)]=\"selectedHero.name\" placeholder=\"name\"/>\n</div>\n</div>"
+            template: "<h1>{{title}}</h1>\n    <h2>My Heroes</h2>\n    <ul class=\"heroes\">\n    <li *ngFor=\"let hero of heroes\"[class.selected]=\"hero === selectedHero\" (click)=\"onSelect(hero)\">\n    <span class=\"badge\">{{hero.id}}</span> {{hero.name}}\n    </li>\n    </ul>\n    <my-hero-detail [hero]=\"selectedHero\"></my-hero-detail>\n    ",
+            directives: [hero_detail_component_1.HeroDetailComponent],
+            providers: [hero_service_1.HeroService]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [hero_service_1.HeroService])
     ], AppComponent);
     return AppComponent;
 }());
 exports.AppComponent = AppComponent;
-var Hero = (function () {
-    function Hero() {
-    }
-    return Hero;
-}());
-exports.Hero = Hero;
-var HEROES = [
-    { id: 11, name: 'Mr. Nice' },
-    { id: 12, name: 'Narco' },
-    { id: 13, name: 'Bombasto' },
-    { id: 14, name: 'Celeritas' },
-    { id: 15, name: 'Magneta' },
-    { id: 16, name: 'RubberMan' },
-    { id: 17, name: 'Dynama' },
-    { id: 18, name: 'Dr IQ' },
-    { id: 19, name: 'Magma' },
-    { id: 20, name: 'Tornado' }
-];
 //# sourceMappingURL=app.component.js.map
